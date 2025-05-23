@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orm>
+  <mapping class="org.openurp.tool.book.model.DefaultMapping" name="tool"/>
+  <naming>
+    <profile package="org.openurp.tool" pluralize="true" schema="tool"/>
+  </naming>
+</orm>

@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<db engine="PostgreSQL" version="UNDEFINED">
+  <schemas>
+    <schema name="tool">
+      <tables>
+        <table name="book_categories" comment="BookCategory?@tool">
+          <columns>
+            <column name="id" type="integer" nullable="false" comment="非业务主键:auto_increment"/>
+            <column name="code" type="varchar(50)" nullable="false" comment="代码"/>
+            <column name="name" type="varchar(100)" nullable="false" comment="名称"/>
+          </columns>
+          <constraints>
+            <primary-key name="pk_lkbpdt3molrx8lrsafy7ter00" columns="id"/>
+          </constraints>
+        </table>
+        <table name="books" comment="Book?@tool">
+          <columns>
+            <column name="id" type="bigint" nullable="false" comment="非业务主键:datetime"/>
+            <column name="author" type="varchar(100)" nullable="false" comment="author?"/>
+            <column name="binding" type="varchar(10)" comment="binding?"/>
+            <column name="category_id" type="integer" comment="BookCategory?ID"/>
+            <column name="description" type="varchar(500)" comment="description?"/>
+            <column name="edition" type="varchar(20)" nullable="false" comment="edition?"/>
+            <column name="format" type="varchar(10)" comment="format?"/>
+            <column name="isbn" type="varchar(13)" nullable="false" comment="isbn?"/>
+            <column name="&quot;language&quot;" type="varchar(60)" comment="language?"/>
+            <column name="name" type="varchar(200)" nullable="false" comment="名称"/>
+            <column name="pages" type="varchar(10)" comment="pages?"/>
+            <column name="picture_url" type="varchar(200)" comment="pictureUrl?"/>
+            <column name="press_id" type="integer" nullable="false" comment="Press?ID"/>
+            <column name="price" type="integer" comment="price?"/>
+            <column name="published_on" type="date" nullable="false" comment="publishedOn?"/>
+            <column name="translator" type="varchar(100)" comment="translator?"/>
+            <column name="updated_at" type="timestamptz" nullable="false" comment="更新时间"/>
+            <column name="words" type="varchar(30)" comment="words?"/>
+          </columns>
+          <constraints>
+            <primary-key name="pk_elfr0tjcg0iqcgqhbyjg0ynao" columns="id"/>
+            <foreign-key name="fk_f65lsitwn7k54dkh1jxyoc825" column="category_id"
+                         referenced-table="tool.book_categories" referenced-column="id"/>
+            <foreign-key name="fk_sinsbyrnio38x1dx04n7nep3r" column="press_id" referenced-table="tool.presses"
+                         referenced-column="id"/>
+          </constraints>
+        </table>
+        <table name="his_books" comment="HisBook?@tool">
+          <columns>
+            <column name="id" type="bigint" nullable="false" comment="非业务主键:assigned"/>
+            <column name="author" type="varchar(100)" nullable="false" comment="author?"/>
+            <column name="binding" type="varchar(10)" comment="binding?"/>
+            <column name="category_id" type="integer" comment="BookCategory?ID"/>
+            <column name="description" type="varchar(500)" comment="description?"/>
+            <column name="edition" type="varchar(20)" nullable="false" comment="edition?"/>
+            <column name="format" type="varchar(10)" comment="format?"/>
+            <column name="isbn" type="varchar(13)" nullable="false" comment="isbn?"/>
+            <column name="&quot;language&quot;" type="varchar(60)" comment="language?"/>
+            <column name="name" type="varchar(200)" nullable="false" comment="名称"/>
+            <column name="pages" type="varchar(10)" comment="pages?"/>
+            <column name="picture_url" type="varchar(200)" comment="pictureUrl?"/>
+            <column name="press_id" type="integer" nullable="false" comment="Press?ID"/>
+            <column name="price" type="integer" comment="price?"/>
+            <column name="published_on" type="date" nullable="false" comment="publishedOn?"/>
+            <column name="translator" type="varchar(100)" comment="translator?"/>
+            <column name="updated_at" type="timestamptz" nullable="false" comment="更新时间"/>
+            <column name="words" type="varchar(30)" comment="words?"/>
+          </columns>
+          <constraints>
+            <primary-key name="pk_hk59fp6o293bf7ccopm41bqpx" columns="id"/>
+            <foreign-key name="fk_j1do9c4sgorm47m19swxojxsx" column="category_id"
+                         referenced-table="tool.book_categories" referenced-column="id"/>
+            <foreign-key name="fk_oj2aanst0dsnuj0u0k5t3vnm5" column="press_id" referenced-table="tool.presses"
+                         referenced-column="id"/>
+          </constraints>
+        </table>
+        <table name="presses" comment="Press?@tool">
+          <columns>
+            <column name="id" type="integer" nullable="false" comment="非业务主键:auto_increment"/>
+            <column name="code" type="varchar(50)" nullable="false" comment="代码"/>
+            <column name="name" type="varchar(100)" nullable="false" comment="名称"/>
+          </columns>
+          <constraints>
+            <primary-key name="pk_rk7ek6u5edrwv9xxydg7bc48q" columns="id"/>
+          </constraints>
+        </table>
+      </tables>
+    </schema>
+  </schemas>
+</db>
