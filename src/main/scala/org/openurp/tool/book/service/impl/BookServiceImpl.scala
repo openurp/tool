@@ -24,7 +24,7 @@ import org.beangle.data.dao.{EntityDao, OqlBuilder}
 import org.openurp.tool.book.model.*
 import org.openurp.tool.book.service.{BookService, IsbnHelper}
 
-import java.time.{Duration, Instant, LocalDate, YearMonth}
+import java.time.{Instant, LocalDate, YearMonth}
 
 class BookServiceImpl extends BookService {
 
@@ -49,7 +49,11 @@ class BookServiceImpl extends BookService {
     if (r.getBoolean("success")) {
       val j = r.get("data").map(_.asInstanceOf[JsonObject])
       j.map { jd =>
-        val publishedOn = YearMonth.parse(jd.getString("pressDate"))
+        var pressDate = jd.getString("pressDate")
+        if (Strings.count(pressDate, '-') == 2) {
+          pressDate = Strings.substringBeforeLast(pressDate, "-")
+        }
+        val publishedOn = YearMonth.parse(pressDate)
         val expired = publishedOn.atDay(1).plusDays(expiredDays).isBefore(LocalDate.now)
         val nb = new Book
         nb.updatedAt = Instant.now
@@ -68,11 +72,11 @@ class BookServiceImpl extends BookService {
         if (Strings.isNotBlank(clcCode) && Strings.isNotBlank(clcName)) {
           nb.category = Some(getOrCreateCategory(clcName, clcCode))
         }
-        nb.binding = Option(jd.getString("binding", null))
-        nb.language = Option(jd.getString("language", null))
-        nb.format = Option(jd.getString("format", null))
-        nb.pages = Option(jd.getString("pages", null))
-        nb.words = Option(jd.getString("words", null))
+        nb.binding = getString(jd, "binding")
+        nb.language = getString(jd, "language")
+        nb.format = getString(jd, "format")
+        nb.pages = getString(jd, "pages")
+        nb.words = getString(jd, "words")
         val pictures = jd.getString("pictures", null)
         if (Strings.isNotBlank(pictures)) {
           val pics = Json.parseArray(pictures)
@@ -93,6 +97,11 @@ class BookServiceImpl extends BookService {
     } else {
       None
     }
+  }
+
+  private def getString(o: JsonObject, p: String): Option[String] = {
+    val v = o.getString(p)
+    if Strings.isBlank(v) then None else Some(v)
   }
 
   private def getOrCreatePress(name: String, publisherId: Option[String]): Press = {
