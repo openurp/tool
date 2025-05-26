@@ -19,6 +19,7 @@ package org.openurp.tool.book.service.impl
 
 import org.beangle.commons.json.{Json, JsonObject}
 import org.beangle.commons.lang.Strings
+import org.beangle.commons.logging.Logging
 import org.beangle.commons.net.http.HttpUtils
 import org.beangle.data.dao.{EntityDao, OqlBuilder}
 import org.openurp.tool.book.model.*
@@ -26,7 +27,7 @@ import org.openurp.tool.book.service.{BookService, IsbnHelper}
 
 import java.time.{Instant, LocalDate, YearMonth}
 
-class BookServiceImpl extends BookService {
+class BookServiceImpl extends BookService, Logging {
 
   var entityDao: EntityDao = _
   var appKey: String = _
@@ -45,6 +46,9 @@ class BookServiceImpl extends BookService {
   override def findRemote(isbn: String): Option[AbstractBook] = {
     val url = s"https://data.isbn.work/openApi/getInfoByIsbn?isbn=${isbn}&appKey=${appKey}"
     val res = HttpUtils.getText(url)
+    if (logger.isDebugEnabled) {
+      logger.debug(s"fetch ${url} get ${res.getText}")
+    }
     val r = Json.parse(res.getText).asInstanceOf[JsonObject]
     if (r.getBoolean("success")) {
       val j = r.get("data").map(_.asInstanceOf[JsonObject])
@@ -52,6 +56,8 @@ class BookServiceImpl extends BookService {
         var pressDate = jd.getString("pressDate")
         if (Strings.count(pressDate, '-') == 2) {
           pressDate = Strings.substringBeforeLast(pressDate, "-")
+        } else if (pressDate.length < 6) {
+          pressDate = pressDate.substring(0, 4) + "-01"
         }
         val publishedOn = YearMonth.parse(pressDate)
         val expired = publishedOn.atDay(1).plusDays(expiredDays).isBefore(LocalDate.now)
