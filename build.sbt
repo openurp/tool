@@ -23,9 +23,6 @@ ThisBuild / developers := List(
 ThisBuild / description := "OpenURP Tool"
 ThisBuild / homepage := Some(url("http://openurp.github.io/tool/index.html"))
 
-val beangle_bui_bootstrap = "org.beangle.bui" % "beangle-bui-bootstrap" % "0.0.5"
-val beangle_commons = "org.beangle.commons" % "beangle-commons" % "5.6.28-SNAPSHOT"
-
 val commonLibs = Seq(beangle_commons, beangle_ems_app, beangle_model, beangle_cdi, beangle_jdbc, logback_classic,
   spring_context, spring_beans, spring_tx, spring_jdbc,
   hibernate_core, hibernate_jcache, caffeine_jcache)

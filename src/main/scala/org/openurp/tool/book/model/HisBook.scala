@@ -36,7 +36,7 @@ class HisBook extends AbstractBook {
     this.edition = b.edition
     this.price = b.price
     this.description = b.description
-    this.publishedOn = b.publishedOn
+    this.publishedIn = b.publishedIn
     this.category = b.category
     this.binding = b.binding
     this.language = b.language

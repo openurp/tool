@@ -66,7 +66,7 @@ class BookWS extends ActionSupport {
     d.add("name", book.name)
     d.add("author", book.author)
     d.add("press", book.press.name)
-    d.add("publishedOn", book.publishedOn)
+    d.add("publishedIn", book.publishedIn)
     d.add("edition", book.edition)
     book.price foreach { p => d.add("price", p) }
     book.description foreach { p => d.add("description", p) }

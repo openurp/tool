@@ -29,7 +29,7 @@
             <column name="picture_url" type="varchar(200)" comment="pictureUrl?"/>
             <column name="press_id" type="integer" nullable="false" comment="Press?ID"/>
             <column name="price" type="integer" comment="price?"/>
-            <column name="published_on" type="date" nullable="false" comment="publishedOn?"/>
+            <column name="published_on" type="date" nullable="false" comment="publishedIn?"/>
             <column name="translator" type="varchar(100)" comment="translator?"/>
             <column name="updated_at" type="timestamptz" nullable="false" comment="更新时间"/>
             <column name="words" type="varchar(30)" comment="words?"/>
@@ -58,7 +58,7 @@
             <column name="picture_url" type="varchar(200)" comment="pictureUrl?"/>
             <column name="press_id" type="integer" nullable="false" comment="Press?ID"/>
             <column name="price" type="integer" comment="price?"/>
-            <column name="published_on" type="date" nullable="false" comment="publishedOn?"/>
+            <column name="published_on" type="date" nullable="false" comment="publishedIn?"/>
             <column name="translator" type="varchar(100)" comment="translator?"/>
             <column name="updated_at" type="timestamptz" nullable="false" comment="更新时间"/>
             <column name="words" type="varchar(30)" comment="words?"/>

@@ -17,11 +17,20 @@
 
 package org.openurp.tool.web.ws
 
-import org.beangle.commons.cdi.BindModule
+import org.beangle.commons.lang.Strings
+import org.beangle.webmvc.annotation.{param, response}
+import org.beangle.webmvc.support.ActionSupport
+import org.openurp.tool.translate.service.TranslateService
 
-class DefaultModule extends BindModule {
-  protected override def binding(): Unit = {
-    bind(classOf[BookWS])
-    bind(classOf[TranslateWS])
+class TranslateWS extends ActionSupport {
+
+  var translateService: TranslateService = _
+
+  @response
+  def en(@param("q") q: String): String = {
+    if Strings.isEmpty(q) then "Param q is needed"
+    else if q.length > 200 then "Cannot handle Chinese characters exceeding 200"
+    else
+      translateService.translate(q, "auto", "en")
   }
 }

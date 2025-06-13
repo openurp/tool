@@ -15,13 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.openurp.tool.web.ws
+package org.openurp.tool.translate.service
 
-import org.beangle.commons.cdi.BindModule
+trait TranslateService {
 
-class DefaultModule extends BindModule {
-  protected override def binding(): Unit = {
-    bind(classOf[BookWS])
-    bind(classOf[TranslateWS])
-  }
+  def translate(text: String, from: String, to: String): String
 }

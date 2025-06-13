@@ -37,8 +37,8 @@ abstract class AbstractBook extends LongId, Named, Updated {
   var price: Option[Int] = None
   /** 简介 */
   var description: Option[String] = None
-  /** 出版日期 */
-  var publishedOn: YearMonth = _
+  /** 出版年月 */
+  var publishedIn: YearMonth = _
   /** 图书分类 */
   var category: Option[BookCategory] = None
 

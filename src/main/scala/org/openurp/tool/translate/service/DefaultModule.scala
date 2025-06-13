@@ -15,13 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.openurp.tool.web.ws
+package org.openurp.tool.translate.service
 
 import org.beangle.commons.cdi.BindModule
+import org.beangle.ems.app.EmsApp
+import org.openurp.tool.translate.service.impl.BaiduTranslateServiceImpl
 
 class DefaultModule extends BindModule {
+
   protected override def binding(): Unit = {
-    bind(classOf[BookWS])
-    bind(classOf[TranslateWS])
+    println(EmsApp.properties)
+    if (EmsApp.properties.contains("fanyiAppid")) {
+      bind(classOf[BaiduTranslateServiceImpl])
+        .property("appid", EmsApp.properties("fanyiAppid"))
+        .property("securityKey", EmsApp.properties("fanyiSecurityKey"))
+    }
   }
 }

@@ -59,19 +59,22 @@ class BookServiceImpl extends BookService, Logging {
         } else if (pressDate.length < 6) {
           pressDate = pressDate.substring(0, 4) + "-01"
         }
-        val publishedOn = YearMonth.parse(pressDate)
-        val expired = publishedOn.atDay(1).plusDays(expiredDays).isBefore(LocalDate.now)
+        val publishedIn = YearMonth.parse(pressDate)
+        val expired = publishedIn.atDay(1).plusDays(expiredDays).isBefore(LocalDate.now)
         val nb = new Book
         nb.updatedAt = Instant.now
         nb.isbn = isbn
         nb.name = jd.getString("bookName")
         nb.author = jd.getString("author")
-        val press = jd.getString("press")
-        nb.press = getOrCreatePress(press, Some(IsbnHelper.getPublisherId(isbn)))
-        nb.publishedOn = publishedOn
+        nb.publishedIn = publishedIn
         nb.edition = jd.getString("edition")
+        if (Strings.isBlank(nb.edition)) {
+          nb.edition = "--"
+        }
         nb.description = Option(jd.getString("bookDesc", null))
         nb.price = Some(jd.getInt("price"))
+        val press = jd.getString("press")
+        nb.press = getOrCreatePress(press, Some(IsbnHelper.getPublisherId(isbn)))
 
         val clcCode = jd.getString("clcCode")
         val clcName = jd.getString("clcName")
@@ -110,7 +113,8 @@ class BookServiceImpl extends BookService, Logging {
     if Strings.isBlank(v) then None else Some(v)
   }
 
-  private def getOrCreatePress(name: String, publisherId: Option[String]): Press = {
+  private def getOrCreatePress(pressName: String, publisherId: Option[String]): Press = {
+    val name = pressName.trim()
     val q = OqlBuilder.from(classOf[Press], "p")
     q.where("p.name=:name", name).cacheable()
     val rs = entityDao.search(q)
