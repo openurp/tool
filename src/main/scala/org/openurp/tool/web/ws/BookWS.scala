@@ -21,6 +21,7 @@ import org.beangle.commons.json.JsonObject
 import org.beangle.data.dao.EntityDao
 import org.beangle.webmvc.annotation.{mapping, param, response}
 import org.beangle.webmvc.support.ActionSupport
+import org.beangle.webmvc.view.{Status, View}
 import org.openurp.tool.book.model.AbstractBook
 import org.openurp.tool.book.service.{BookService, IsbnHelper}
 
@@ -29,6 +30,15 @@ class BookWS extends ActionSupport {
   var entityDao: EntityDao = _
 
   var bookService: BookService = _
+
+  @mapping("image/{isbn}")
+  def image(@param("isbn") isbnstr: String): View = {
+    val isbn = IsbnHelper.format(isbnstr)
+    bookService.findLocal(isbn).flatMap(_.pictureUrl) match {
+      case Some(url) => redirect(to(url), "")
+      case None => Status.NotFound
+    }
+  }
 
   @response
   @mapping("isbn/{isbn}")
