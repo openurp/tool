@@ -32,7 +32,7 @@ class BaiduTranslateServiceImpl extends TranslateService {
   private val TRANS_API_HOST = "https://fanyi-api.baidu.com/api/trans/vip/translate"
 
   var appid: String = _
-  var securityKey: String = _
+  var secret: String = _
 
   override def translate(text: String, from: String, to: String): String = {
     val queryString = UrlBuilder.encodeParams(buildParams(text, from, to))
@@ -56,8 +56,7 @@ class BaiduTranslateServiceImpl extends TranslateService {
     val salt = String.valueOf(System.currentTimeMillis)
     params.put("salt", salt)
     // 签名
-    val src = appid + query + salt + securityKey // 加密前的原文
-
+    val src = appid + query + salt + secret // 加密前的原文
     params.put("sign", Digests.md5Hex(src))
     params
   }

@@ -17,12 +17,7 @@
 
 package org.openurp.tool.book.model
 
-import org.beangle.data.model.LongId
-import org.beangle.data.model.pojo.Named
-
-import java.time.YearMonth
-
-/** 图书
+/** 归档的历史图书
  */
 class HisBook extends AbstractBook {
   def this(b: Book) = {

@@ -15,14 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.openurp.tool.web.ws
+package org.openurp.tool.enterprise.service
 
 import org.beangle.commons.cdi.BindModule
+import org.beangle.ems.app.EmsApp
+import org.openurp.tool.enterprise.service.impl.WdylEnterpriseServiceImpl
 
 class DefaultModule extends BindModule {
+
   protected override def binding(): Unit = {
-    bind(classOf[BookWS])
-    bind(classOf[TranslateWS])
-    bind(classOf[EnterpriseWS])
+    if (EmsApp.properties.contains("wdylAppid")) {
+      bind(classOf[WdylEnterpriseServiceImpl])
+        .property("appid", EmsApp.properties("wdylAppid"))
+        .property("secret", EmsApp.properties("wdylSecret"))
+    }
   }
 }

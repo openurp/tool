@@ -24,11 +24,10 @@ import org.openurp.tool.translate.service.impl.BaiduTranslateServiceImpl
 class DefaultModule extends BindModule {
 
   protected override def binding(): Unit = {
-    println(EmsApp.properties)
     if (EmsApp.properties.contains("fanyiAppid")) {
       bind(classOf[BaiduTranslateServiceImpl])
         .property("appid", EmsApp.properties("fanyiAppid"))
-        .property("securityKey", EmsApp.properties("fanyiSecurityKey"))
+        .property("secret", EmsApp.properties("fanyiSecret"))
     }
   }
 }

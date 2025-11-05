@@ -28,7 +28,7 @@ val commonLibs = Seq(beangle_commons, beangle_ems_app, beangle_model, beangle_cd
   hibernate_core, hibernate_jcache, caffeine_jcache)
 
 lazy val root = (project in file("."))
-  .enablePlugins(WarPlugin, UndertowPlugin, TomcatPlugin)
+  .enablePlugins(WarPlugin, TomcatPlugin)
   .settings(
     name := "openurp-tool-webapp",
     common,
